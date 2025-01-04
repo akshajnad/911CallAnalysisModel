@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>911-Association-Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        select, button {
+            font-size: 1em;
+            padding: 6px;
+        }
+        .table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 70%;
+        }
+        .table th, .table td {
+            border: 1px solid #aaa;
+            padding: 8px;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .table-striped tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table-bordered {
+            border: 2px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>911-Association-Explorer</h1>
+    <p>
+        This app performs a basic demonstration of Association Rule Mining on a small sample 
+        of emergency 911 calls. Use the dropdown to filter calls by reason, then view the table 
+        of data and the top 5 association rules discovered.
+    </p>
+
+    <form method="POST" action="/">
+        <label for="reasonSelect">Filter by Reason:</label>
+        <select id="reasonSelect" name="selected_reason">
+            <option value="All">All</option>
+            {% for r in reasons %}
+                {% if r == selected_reason %}
+                    <option value="{{ r }}" selected>{{ r }}</option>
+                {% else %}
+                    <option value="{{ r }}">{{ r }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button type="submit">Apply Filter</button>
+    </form>
+
+    <h2>Filtered 911 Data</h2>
+    {{ table_data|safe }}
+
+    <h2>Top Association Rules (Sample)</h2>
+    {{ rules_data|safe }}
+</body>
+</html>
